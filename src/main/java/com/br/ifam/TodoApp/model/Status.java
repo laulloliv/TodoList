@@ -10,37 +10,47 @@ public class Status {
     @Column(nullable = false, unique = true)
     private String titulo;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = true, unique = false)
     private String descricao;
 
     public Status() {
     }
-    public Status(String titulo) {
-        this.titulo = titulo;
+
+    public Status(String titulo, String descricao) {
+        setTitulo(titulo);
+        setDescricao(descricao);
     }
+
     public Long getId() {
         return id;
     }
+
     public void setId(Long id) {
         this.id = id;
     }
+
     public String getTitulo() {
         return titulo;
     }
+
     public void setTitulo(String titulo) {
         this.titulo = titulo;
     }
+
     public String getDescricao() {
         return descricao;
     }
+
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
+
     @Override
     public String toString() {
-        return "Status [id=" + id + 
-               ", titulo=" + titulo + 
-               ", descricao=" + descricao + "]";
+        return "Status{" +
+                "id=" + id +
+                ", titulo='" + titulo + '\'' +
+                ", descricao='" + descricao + '\'' +
+                '}';
     }
-    
 }
