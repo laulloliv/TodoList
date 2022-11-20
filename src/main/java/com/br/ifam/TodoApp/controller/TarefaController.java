@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("api/tarefas")
+@RequestMapping("/api/tarefas")
 public class TarefaController {
 
     @Autowired

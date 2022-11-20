@@ -9,7 +9,7 @@ public class Categoria {
     private Long id;
     @Column(nullable = false, unique = true)
     private String titulo;
-    @Column()
+    @Column(nullable = false)
     private String descricao;
 
     public Categoria() {

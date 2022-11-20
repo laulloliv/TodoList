@@ -8,7 +8,7 @@ public class Status {
     private Long id;
     @Column(nullable = false, unique = true)
     private String titulo;
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String descricao;
 
     public Status() {

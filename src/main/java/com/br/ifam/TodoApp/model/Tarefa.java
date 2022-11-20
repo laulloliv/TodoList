@@ -7,7 +7,7 @@ public class Tarefa {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String titulo;
     @Column
     private String descricao;
@@ -15,8 +15,8 @@ public class Tarefa {
     private String dataPrevista;
     @Column
     private String dataConclusao;
-//    @ManyToOne
-//    private Categoria categoria;
+    @ManyToOne
+    private Categoria categoria;
   //  @ManyToOne
     //private Status status;
 
