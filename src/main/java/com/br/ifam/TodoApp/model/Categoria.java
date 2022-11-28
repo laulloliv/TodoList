@@ -50,3 +50,4 @@ public class Categoria {
                ", titulo=" + titulo + 
                ", descricao=" + descricao + "]";
 }
+}
