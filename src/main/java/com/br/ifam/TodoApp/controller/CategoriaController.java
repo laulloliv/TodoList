@@ -6,12 +6,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.br.ifam.TodoApp.model.Categoria;
 import com.br.ifam.TodoApp.repository.CategoriaRepository;
@@ -25,8 +20,7 @@ public class CategoriaController {
     private CategoriaRepository categoriaRepository;
     
     // Buscar pelo ID
-    @GetMapping(value = "/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseBody
+    @GetMapping(value = "/{id}")
     public Categoria find(@PathVariable Long id){
         Optional<Categoria> categoria = categoriaRepository.findById(id);
         if(categoria.isPresent()){
@@ -38,9 +32,8 @@ public class CategoriaController {
     }
 
     // Buscar pelo TITULO
-    @GetMapping(value="/{titulo}", produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseBody
-    public Categoria find(@PathVariable String titulo){
+    @GetMapping(value="/titulo/{titulo}")
+    public Categoria findByName(@PathVariable String titulo){
         Optional<Categoria> categoria = categoriaRepository.findByTituloContaining(titulo);
         if(categoria.isPresent()){
             return categoria.get();
@@ -60,15 +53,19 @@ public class CategoriaController {
     }
 
     @GetMapping(value = "/cadastrar")
-    @RequestMapping
-    public String add(){
-        Categoria categoria1 = new Categoria();
-        Categoria categoria2 = new Categoria();
-        Categoria categoria3 = new Categoria();
+    @ResponseBody
+    public String cadastrar(){
+        Categoria categoria1 = new Categoria("TRABALHO","Tarefas relacionadas á 'trabalho'");
+        Categoria categoria2 = new Categoria("VIAGEM","Tarefas relacionadas á 'viagem'");
+        Categoria categoria3 = new Categoria("EDUCAÇÃO","Tarefas relacionadas á 'educação'");
+        Categoria categoria4 = new Categoria("ESPORTES","Tarefas relacionadas á 'esportes'");
+        Categoria categoria5 = new Categoria("OUTRAS","Tarefas relacionadas á 'outras'");
 
         categoriaRepository.save(categoria1);
         categoriaRepository.save(categoria2);
         categoriaRepository.save(categoria3);
+        categoriaRepository.save(categoria4);
+        categoriaRepository.save(categoria5);
 
         return "Categorias inseridas com Sucesso";
     }
@@ -78,5 +75,11 @@ public class CategoriaController {
     public String deleta(@PathVariable Long id){
         categoriaRepository.deleteById(id);
         return "Categoria excluida com sucesso !";
+    }
+
+    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public Categoria create (Categoria categoria){
+        Categoria categoriaSalva = categoriaRepository.save(categoria);
+        return categoriaSalva;
     }
 }

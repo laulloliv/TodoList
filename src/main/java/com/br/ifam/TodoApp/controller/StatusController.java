@@ -23,10 +23,9 @@ public class StatusController {
     @Autowired
     private StatusRepository statusRepository;
 
-    @GetMapping(value = "/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseBody
-    public Status find(@PathVariable Long id){
-        Optional<Status> statu = statusRepository.findById(id);
+    @GetMapping(value="/titulo/{titulo}")
+    public Status find(@PathVariable String titulo){
+        Optional<Status> statu = statusRepository.findByTituloContaining(titulo);
         if(statu.isPresent()){
             return statu.get();
         }
@@ -34,11 +33,10 @@ public class StatusController {
             return null;
         }
     }
-    
-    @GetMapping(value="/{titulo}", produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseBody
-    public Status find(@PathVariable String titulo){
-        Optional<Status> statu = statusRepository.findByTituloContaining(titulo);
+
+    @GetMapping(value = "/{id}")
+    public Status find(@PathVariable Long id){
+        Optional<Status> statu = statusRepository.findById(id);
         if(statu.isPresent()){
             return statu.get();
         }
@@ -59,22 +57,22 @@ public class StatusController {
     @GetMapping(value = "/cadastrar")
     @RequestMapping
     public String add(){
-        Status status1 = new Status();
-        Status status2 = new Status();
-        Status status3 = new Status();
+        Status status1 = new Status("FEITO");
+        Status status2 = new Status("EM ANDAMENTO");
+        Status status3 = new Status("NÃO INICIADO");
 
         statusRepository.save(status1);
         statusRepository.save(status2);
         statusRepository.save(status3);
 
-        return "Categorias inseridas com Sucesso";
+        return "Status inseridas com Sucesso";
     }
 
     @DeleteMapping(value = "{id}")
     @ResponseBody
     public String deleta(@PathVariable Long id){
         statusRepository.deleteById(id);
-        return "Categoria excluida com sucesso !";
+        return "Status excluida com sucesso !";
     }
 
 }

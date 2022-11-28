@@ -16,7 +16,7 @@ public class Status {
     public Status() {
     }
 
-    public Status(String titulo, String descricao) {
+    public Status(String titulo) {
         setTitulo(titulo);
         setDescricao(descricao);
     }
