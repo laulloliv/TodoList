@@ -1,5 +1,7 @@
 package com.br.ifam.TodoApp.dto;
 
+import com.br.ifam.TodoApp.model.Categoria;
+import com.br.ifam.TodoApp.model.Status;
 import com.br.ifam.TodoApp.model.Tarefa;
 
 public class TarefaOutputDTO {
@@ -10,12 +12,17 @@ public class TarefaOutputDTO {
     private String dataPrevista;
     private String dataConclusao;
 
+    private Categoria categoria;
+
+    private Status status;
     public TarefaOutputDTO(Tarefa tarefa) {
        this.setId(tarefa.getId());
        this.setTitulo(tarefa.getTitulo());
        this.setDescricao(tarefa.getDescricao());
        this.setDataPrevista(tarefa.getDataPrevista());
        this.setDataConclusao(tarefa.getDataConclusao());
+        this.setCategoria(tarefa.getCategoria());
+        this.setStatus(tarefa.getStatus());
     }
 
     public Long getId() {
@@ -58,14 +65,32 @@ public class TarefaOutputDTO {
         this.dataConclusao = dataConclusao;
     }
 
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
     @Override
     public String toString() {
-        return "tarefaOutputDTO{" +
+        return "TarefaOutputDTO{" +
                 "Id=" + Id +
                 ", titulo='" + titulo + '\'' +
                 ", descricao='" + descricao + '\'' +
                 ", dataPrevista='" + dataPrevista + '\'' +
                 ", dataConclusao='" + dataConclusao + '\'' +
+                ", categoria=" + categoria +
+                ", status=" + status +
                 '}';
     }
 }

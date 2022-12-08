@@ -1,6 +1,10 @@
 package com.br.ifam.TodoApp.dto;
 
+import com.br.ifam.TodoApp.model.Categoria;
+import com.br.ifam.TodoApp.model.Status;
 import com.br.ifam.TodoApp.model.Tarefa;
+
+import java.util.Calendar;
 
 public class TarefaInputDTO {
 
@@ -9,8 +13,8 @@ public class TarefaInputDTO {
     private String dataPrevista;
     private String dataConclusao;
 
-/*    private String categoria;
-    private String status;*/
+    private Categoria categoria;
+    private Status status;
 
     public TarefaInputDTO() {
     }
@@ -19,11 +23,13 @@ public class TarefaInputDTO {
         this.titulo = titulo;
     }
 
-    public TarefaInputDTO(String titulo, String descricao, String dataPrevista, String dataConclusao) {
+    public TarefaInputDTO(String titulo, String descricao, String dataPrevista, String dataConclusao, Categoria categoria, Status status) {
         this.titulo = titulo;
         this.descricao = descricao;
         this.dataPrevista = dataPrevista;
         this.dataConclusao = dataConclusao;
+        this.categoria = categoria;
+        this.status = status;
     }
 
     public String getTitulo() {
@@ -58,13 +64,13 @@ public class TarefaInputDTO {
         this.dataConclusao = dataConclusao;
     }
 
-  /*  public String getCategoria() {
+    public Categoria getCategoria() {
         return categoria;
     }
 
-    public String getStatus() {
+    public Status getStatus() {
         return status;
-    }*/
+    }
 
     public Tarefa build(){
         Tarefa tarefa =new Tarefa();
@@ -72,6 +78,8 @@ public class TarefaInputDTO {
         tarefa.setDescricao(this.getDescricao());
         tarefa.setDataPrevista(this.dataPrevista);
         tarefa.setDataConclusao(this.dataConclusao);
+        tarefa.setCategoria(this.categoria);
+        tarefa.setStatus(this.status);
         return tarefa;
     }
 

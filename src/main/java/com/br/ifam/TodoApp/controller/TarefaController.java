@@ -2,7 +2,11 @@ package com.br.ifam.TodoApp.controller;
 
 import com.br.ifam.TodoApp.dto.TarefaInputDTO;
 import com.br.ifam.TodoApp.dto.TarefaOutputDTO;
+import com.br.ifam.TodoApp.model.Categoria;
+import com.br.ifam.TodoApp.model.Status;
 import com.br.ifam.TodoApp.model.Tarefa;
+import com.br.ifam.TodoApp.repository.CategoriaRepository;
+import com.br.ifam.TodoApp.repository.StatusRepository;
 import com.br.ifam.TodoApp.repository.TarefaRepository;
 import org.springframework.http.MediaType;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,24 +21,42 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("api/tarefas")
+@RequestMapping("/api/tarefas")
 public class TarefaController {
 
     @Autowired
     private TarefaRepository tarefaRepository;
+    @Autowired
+    private CategoriaRepository categoriaRepository;
+    @Autowired
+    private StatusRepository statusRepository;
 
     @GetMapping("/create")
     @ResponseBody
     public String create(){
-        Tarefa tarefa = new Tarefa("Mercado", "One", "13/02/2022", "14/09/2022");
-        Tarefa tarefa2 = new Tarefa("Esporte", "One", "15/12/2022", "22/12/2022");
-        Tarefa tarefa3 = new Tarefa("Faculdade", "One", "03/06/2022", "11/10/2022");
+        Optional<Categoria> categoria = categoriaRepository.findById((long) 20);
+        Optional<Status> status = statusRepository.findById((long) 5);
+        System.out.println(categoria.get());
+        System.out.println(status.get());
+        if (categoria.isPresent() && status.isPresent()){
+            Tarefa tarefa = new Tarefa("Mercado", "One", "13/02/2022", "14/09/2022",categoria.get(),status.get());
+            Tarefa tarefa2 = new Tarefa("Esporte", "One", "15/12/2022", "22/12/2022",categoria.get(),status.get());
+            Tarefa tarefa3 = new Tarefa("Faculdade", "One", "03/06/2022", "11/10/2022",categoria.get(),status.get());
 
-        tarefaRepository.save(tarefa);
-        tarefaRepository.save(tarefa2);
-        tarefaRepository.save(tarefa3);
+            System.out.println(tarefa);
+            System.out.println(tarefa2);
+            System.out.println(tarefa3);
 
-        return "Dados inserido";
+            tarefaRepository.save(tarefa);
+            tarefaRepository.save(tarefa2);
+            tarefaRepository.save(tarefa3);
+
+            return "Dados inserido";
+
+        }
+        else{
+            return "Erro !";
+        }
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)

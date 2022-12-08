@@ -7,7 +7,7 @@ public class Tarefa {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String titulo;
     @Column
     private String descricao;
@@ -15,20 +15,22 @@ public class Tarefa {
     private String dataPrevista;
     @Column
     private String dataConclusao;
-//    @ManyToOne
-//    private Categoria categoria;
-  //  @ManyToOne
-    //private Status status;
+    @ManyToOne
+    private Categoria categoria;
+    @ManyToOne
+    private Status status;
 
 
     public Tarefa() {
     }
 
-    public Tarefa(String titulo, String descricao, String dataPrevista, String dataConclusao) {
+    public Tarefa(String titulo, String descricao, String dataPrevista, String dataConclusao, Categoria categoria, Status status) {
         setTitulo(titulo);
         setDescricao(descricao);
         setDataPrevista(dataPrevista);
         setDataConclusao(dataConclusao);
+        setCategoria(categoria);
+        setStatus(status);
     }
 
     public Long getId() {
@@ -71,21 +73,21 @@ public class Tarefa {
         this.dataConclusao = dataConclusao;
     }
 
-//    public Categoria getCategoria() {
-//        return categoria;
-//    }
+    public Categoria getCategoria() {
+        return categoria;
+    }
 
-//    public void setCategoria(Categoria categoria) {
-//        this.categoria = categoria;
-//    }
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
+    }
 
-//    public Status getStatus() {
-//        return status;
-//    }
+    public Status getStatus() {
+        return status;
+    }
 
-//    public void setStatus(Status status) {
-//        this.status = status;
-//    }
+    public void setStatus(Status status) {
+        this.status = status;
+    }
 
     @Override
     public String toString() {
