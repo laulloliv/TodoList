@@ -18,7 +18,7 @@ public class CategoriaController {
 
     @Autowired
     private CategoriaRepository categoriaRepository;
-    
+
     // Buscar pelo ID
     @GetMapping(value = "/{id}")
     public Categoria find(@PathVariable Long id){
@@ -52,9 +52,9 @@ public class CategoriaController {
         return categorias;
     }
 
-    @GetMapping(value = "/cadastrar")
+    @GetMapping(value = "/create")
     @ResponseBody
-    public String cadastrar(){
+    public String create(){
         Categoria categoria1 = new Categoria("TRABALHO","Tarefas relacionadas á 'trabalho'");
         Categoria categoria2 = new Categoria("VIAGEM","Tarefas relacionadas á 'viagem'");
         Categoria categoria3 = new Categoria("EDUCAÇÃO","Tarefas relacionadas á 'educação'");
