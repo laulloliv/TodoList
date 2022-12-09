@@ -9,4 +9,5 @@ public interface CategoriaRepository extends CrudRepository<Categoria, Long>{
 
    Optional<Categoria> findByTituloContaining(String titulo);
 
+
 }

@@ -85,11 +85,13 @@ public class TarefaInputDTO {
 
     @Override
     public String toString() {
-        return "tarefaInputDTO{" +
+        return "TarefaInputDTO{" +
                 "titulo='" + titulo + '\'' +
                 ", descricao='" + descricao + '\'' +
                 ", dataPrevista='" + dataPrevista + '\'' +
                 ", dataConclusao='" + dataConclusao + '\'' +
+                ", categoria=" + categoria +
+                ", status=" + status +
                 '}';
     }
 }

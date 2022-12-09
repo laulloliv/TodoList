@@ -12,7 +12,6 @@ import org.springframework.http.MediaType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
@@ -70,6 +69,17 @@ public class TarefaController {
 
         return ResponseEntity.created(path).body(new TarefaOutputDTO(tarefa));
     }
+    @PostMapping(value = "/update/{id}",consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<TarefaOutputDTO> update(@RequestBody TarefaInputDTO dto, @PathVariable Long id, UriComponentsBuilder uriBuilder){
+        System.out.println(dto);
+        Tarefa tarefa = dto.build();
+        tarefa.setId(id);
+        System.out.println(tarefa);
+        tarefaRepository.save(tarefa);
+        URI path = uriBuilder.path("/api/tarefas/{id}").buildAndExpand(id).toUri();
+
+        return ResponseEntity.created(path).body(new TarefaOutputDTO(tarefa));
+    }
 
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
@@ -84,6 +94,36 @@ public class TarefaController {
         List<Tarefa> tarefas = new ArrayList<>();
         tarefas = (List<Tarefa>)tarefaRepository.findAll();
         return tarefas;
+    }
+
+
+    @GetMapping(value = "/categoria/{titulo}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public List<Tarefa> findCategoria(@PathVariable String titulo){
+        List<Tarefa> tarefas = new ArrayList<>();
+        Optional<Categoria> categoria = categoriaRepository.findByTituloContaining(titulo);
+        if(categoria.isPresent()){
+            tarefas = (List<Tarefa>) tarefaRepository.findAllByCategoria(categoria);
+            System.out.println(tarefas);
+            return tarefas;
+        }
+        else {
+            return null;
+        }
+    }
+    @GetMapping(value = "/status/{titulo}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public List<Tarefa> findStatus(@PathVariable String titulo){
+        List<Tarefa> tarefas = new ArrayList<>();
+        Optional<Status> status = statusRepository.findByTituloContaining(titulo);
+        if(status.isPresent()){
+            tarefas = (List<Tarefa>) tarefaRepository.findAllByStatus(status);
+            System.out.println(tarefas);
+            return tarefas;
+        }
+        else {
+            return null;
+        }
     }
 
     @GetMapping(value = "/titulo/{titulo}", produces = MediaType.APPLICATION_JSON_VALUE)

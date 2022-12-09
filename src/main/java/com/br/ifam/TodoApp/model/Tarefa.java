@@ -97,6 +97,8 @@ public class Tarefa {
                 ", descricao='" + descricao + '\'' +
                 ", dataPrevista='" + dataPrevista + '\'' +
                 ", dataConclusao='" + dataConclusao + '\'' +
+                ", categoria=" + categoria +
+                ", status=" + status +
                 '}';
     }
 }
