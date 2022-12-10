@@ -33,8 +33,8 @@ public class TarefaController {
     @GetMapping("/create")
     @ResponseBody
     public String create(){
-        Optional<Categoria> categoria = categoriaRepository.findById((long) 20);
-        Optional<Status> status = statusRepository.findById((long) 5);
+        Optional<Categoria> categoria = categoriaRepository.findById((long) 5);
+        Optional<Status> status = statusRepository.findById((long) 2);
         System.out.println(categoria.get());
         System.out.println(status.get());
         if (categoria.isPresent() && status.isPresent()){
@@ -138,7 +138,34 @@ public class TarefaController {
         tarefaRepository.deleteById(id);
         return "Atenção! Tarefa deletada.";
     }
+    @GetMapping(value = "/done/{id}",consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<TarefaOutputDTO> taskDone(@RequestBody TarefaInputDTO dto, @PathVariable Long id, UriComponentsBuilder uriBuilder){
+        System.out.println(dto);
+        Optional<Status> status = statusRepository.findById((long)1);
+        Optional<Tarefa> tarefaAchada = tarefaRepository.findById(id);
+        Tarefa tarefa = tarefaAchada.get();
+        tarefa.setId(id);
+        tarefa.setStatus(status.get());
+        System.out.println(tarefa);
+        tarefaRepository.save(tarefa);
+        URI path = uriBuilder.path("/api/tarefas/{id}").buildAndExpand(id).toUri();
 
+        return ResponseEntity.created(path).body(new TarefaOutputDTO(tarefa));
+    }
+    @GetMapping(value = "/doing/{id}",consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<TarefaOutputDTO> taskDoing(@RequestBody TarefaInputDTO dto, @PathVariable Long id, UriComponentsBuilder uriBuilder){
+        System.out.println(dto);
+        Optional<Status> status = statusRepository.findById((long)2);
+        Optional<Tarefa> tarefaAchada = tarefaRepository.findById(id);
+        Tarefa tarefa = tarefaAchada.get();
+        tarefa.setId(id);
+        tarefa.setStatus(status.get());
+        System.out.println(tarefa);
+        tarefaRepository.save(tarefa);
+        URI path = uriBuilder.path("/api/tarefas/{id}").buildAndExpand(id).toUri();
+
+        return ResponseEntity.created(path).body(new TarefaOutputDTO(tarefa));
+    }
 
 
 }
