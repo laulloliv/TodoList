@@ -21,6 +21,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/tarefas")
+@CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*")
 public class TarefaController {
 
     @Autowired
@@ -33,42 +34,28 @@ public class TarefaController {
     @GetMapping("/create")
     @ResponseBody
     public String create(){
-        Optional<Categoria> categoria = categoriaRepository.findById((long) 5);
-        Optional<Status> status = statusRepository.findById((long) 2);
-        System.out.println(categoria.get());
-        System.out.println(status.get());
-        if (categoria.isPresent() && status.isPresent()){
-            Tarefa tarefa = new Tarefa("Mercado", "One", "13/02/2022", "14/09/2022",categoria.get(),status.get());
-            Tarefa tarefa2 = new Tarefa("Esporte", "One", "15/12/2022", "22/12/2022",categoria.get(),status.get());
-            Tarefa tarefa3 = new Tarefa("Faculdade", "One", "03/06/2022", "11/10/2022",categoria.get(),status.get());
+        Optional<Categoria> categoria5 = categoriaRepository.findById((long) 5);
+        Optional<Categoria> categoria3 = categoriaRepository.findById((long) 3);
+        Optional<Categoria> categoria4 = categoriaRepository.findById((long) 4);
+        Optional<Status> status = statusRepository.findById((long) 1);
+    //    System.out.println(categoria1.get());
+    //    System.out.println(status.get());
 
-            System.out.println(tarefa);
-            System.out.println(tarefa2);
-            System.out.println(tarefa3);
+        Tarefa tarefa = new Tarefa("Ir ao Mercado", "Comprar batatas, ovos e material para a lasanha", "12/23/2022", null,categoria5.get(),status.get());
+        Tarefa tarefa2 = new Tarefa("Praticar algum Esporte", "Pesquisar academias perto de casa. Procurar por natacao ou basquete", "11/12/2022", null,categoria4.get(),status.get());
+        Tarefa tarefa3 = new Tarefa("Fazer relatorio da Faculdade", "Atividade do prof. Alberto de Sistemas", "12/20/2022", "20/12/2022",categoria3.get(),status.get());
 
-            tarefaRepository.save(tarefa);
-            tarefaRepository.save(tarefa2);
-            tarefaRepository.save(tarefa3);
-
-            return "Dados inserido";
-
-        }
-        else{
-            return "Erro !";
-        }
-    }
-
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<TarefaOutputDTO> create(@RequestBody TarefaInputDTO dto, UriComponentsBuilder uriBuilder){
-
-        System.out.println(dto);
-        Tarefa tarefa = dto.build();
         System.out.println(tarefa);
-        tarefaRepository.save(tarefa);
-        URI path = uriBuilder.path("/api/tarefas/{id}").buildAndExpand(tarefa.getId()).toUri();
+        System.out.println(tarefa2);
+        System.out.println(tarefa3);
 
-        return ResponseEntity.created(path).body(new TarefaOutputDTO(tarefa));
+        tarefaRepository.save(tarefa);
+        tarefaRepository.save(tarefa2);
+        tarefaRepository.save(tarefa3);
+
+        return "Dados inserido";
     }
+
     @PostMapping(value = "/update/{id}",consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<TarefaOutputDTO> update(@RequestBody TarefaInputDTO dto, @PathVariable Long id, UriComponentsBuilder uriBuilder){
         System.out.println(dto);
@@ -101,7 +88,7 @@ public class TarefaController {
     @ResponseBody
     public List<Tarefa> findCategoria(@PathVariable String titulo){
         List<Tarefa> tarefas = new ArrayList<>();
-        Optional<Categoria> categoria = categoriaRepository.findByTituloContaining(titulo);
+        Optional<Categoria> categoria = categoriaRepository.findByTitulo(titulo);
         if(categoria.isPresent()){
             tarefas = (List<Tarefa>) tarefaRepository.findAllByCategoria(categoria);
             System.out.println(tarefas);
@@ -141,7 +128,7 @@ public class TarefaController {
     @GetMapping(value = "/done/{id}",consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<TarefaOutputDTO> taskDone(@RequestBody TarefaInputDTO dto, @PathVariable Long id, UriComponentsBuilder uriBuilder){
         System.out.println(dto);
-        Optional<Status> status = statusRepository.findById((long)1);
+        Optional<Status> status = statusRepository.findById((long)3);
         Optional<Tarefa> tarefaAchada = tarefaRepository.findById(id);
         Tarefa tarefa = tarefaAchada.get();
         tarefa.setId(id);

@@ -13,6 +13,7 @@ import com.br.ifam.TodoApp.repository.StatusRepository;
 
 @RestController
 @RequestMapping("/api/status")
+@CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*")
 public class StatusController {
 
     @Autowired
@@ -40,9 +41,9 @@ public class StatusController {
     @GetMapping(value = "/create")
     @ResponseBody
     public String create(){
-        Status status1 = new Status("Feito","Tarefas Feitas");
-        Status status2 = new Status("Em Andamento","Tarefas Em Andamento");
-        Status status3 = new Status("Novo","Novas Tarefas");
+        Status status1 = new Status("Para Fazer","Tarefa não iniciada.");
+        Status status2 = new Status("Em Atraso","Tarefas que ultrapassaram a data prevista.");
+        Status status3 = new Status("Concluída","Tarefa marcada como concluída.");
 
         statusRepository.save(status1);
         statusRepository.save(status2);
@@ -54,12 +55,7 @@ public class StatusController {
     @GetMapping(value = "/titulo/{titulo}")
     public Status findByName(@PathVariable String titulo){
         Optional<Status> status = statusRepository.findByTituloContaining(titulo);
-        if (status.isPresent()){
-            return status.get();
-        }
-        else {
-            return null;
-        }
+        return status.orElse(null);
     }
 
     @DeleteMapping(value = "{id}")

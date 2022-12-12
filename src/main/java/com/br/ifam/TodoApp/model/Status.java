@@ -17,15 +17,6 @@ public class Status {
         this.descricao = descricao;
     }
 
-    @Override
-    public String toString() {
-        return "Status{" +
-                "id=" + id +
-                ", titulo='" + titulo + '\'' +
-                ", descricao='" + descricao + '\'' +
-                '}';
-    }
-
     public Long getId() {
         return id;
     }
@@ -48,5 +39,14 @@ public class Status {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
+    }
+
+    @Override
+    public String toString() {
+        return "Status{" +
+                "id=" + id +
+                ", titulo='" + titulo + '\'' +
+                ", descricao='" + descricao + '\'' +
+                '}';
     }
 }
