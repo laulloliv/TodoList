@@ -41,8 +41,8 @@ public class TarefaController {
     //    System.out.println(categoria1.get());
     //    System.out.println(status.get());
 
-        Tarefa tarefa = new Tarefa("Ir ao Mercado", "Comprar batatas, ovos e material para a lasanha", "12/23/2022", null,categoria5.get(),status.get());
-        Tarefa tarefa2 = new Tarefa("Praticar algum Esporte", "Pesquisar academias perto de casa. Procurar por natacao ou basquete", "11/12/2022", null,categoria4.get(),status.get());
+        Tarefa tarefa = new Tarefa("Ir ao Mercado", "Comprar batatas, ovos e material para a lasanha", "12/03/2022", "12/12/2022",categoria5.get(),status.get());
+        Tarefa tarefa2 = new Tarefa("Praticar algum Esporte", "Pesquisar academias perto de casa. Procurar por natacao ou basquete", "11/12/2022", "14/12/2022",categoria4.get(),status.get());
         Tarefa tarefa3 = new Tarefa("Fazer relatorio da Faculdade", "Atividade do prof. Alberto de Sistemas", "12/20/2022", "20/12/2022",categoria3.get(),status.get());
 
         System.out.println(tarefa);
@@ -84,7 +84,6 @@ public class TarefaController {
         return tarefas;
     }
 
-
     @GetMapping(value = "/categoria/{titulo}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public List<Tarefa> findCategoria(@PathVariable String titulo){
@@ -96,7 +95,9 @@ public class TarefaController {
             return tarefas;
         }
         else {
-            return null;
+            ArrayList list= new ArrayList<>();
+            list.add("Nenhuma tarefa encontrada!");
+            return list;
         }
     }
     @GetMapping(value = "/status/{titulo}", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -110,7 +111,9 @@ public class TarefaController {
             return tarefas;
         }
         else {
-            return null;
+            ArrayList list= new ArrayList<>();
+            list.add("Nenhuma tarefa encontrada!");
+            return list;
         }
     }
 
@@ -143,7 +146,7 @@ public class TarefaController {
     @GetMapping(value = "/doing/{id}",consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<TarefaOutputDTO> taskDoing(@RequestBody TarefaInputDTO dto, @PathVariable Long id, UriComponentsBuilder uriBuilder){
         System.out.println(dto);
-        Optional<Status> status = statusRepository.findById((long)2);
+        Optional<Status> status = statusRepository.findById((long)1);
         Optional<Tarefa> tarefaAchada = tarefaRepository.findById(id);
         Tarefa tarefa = tarefaAchada.get();
         tarefa.setId(id);
@@ -154,6 +157,5 @@ public class TarefaController {
 
         return ResponseEntity.created(path).body(new TarefaOutputDTO(tarefa));
     }
-
 
 }
