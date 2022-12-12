@@ -72,14 +72,14 @@ public class TarefaInputDTO {
         return status;
     }
 
-    public Tarefa build(){
+    public Tarefa build(Categoria categoria, Status status){
         Tarefa tarefa =new Tarefa();
         tarefa.setTitulo(this.getTitulo());
         tarefa.setDescricao(this.getDescricao());
         tarefa.setDataPrevista(this.dataPrevista);
         tarefa.setDataConclusao(this.dataConclusao);
-        tarefa.setCategoria(this.categoria);
-        tarefa.setStatus(this.status);
+        tarefa.setCategoria(categoria);
+        tarefa.setStatus(status);
         return tarefa;
     }
 

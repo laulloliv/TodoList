@@ -21,7 +21,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/tarefas")
-@CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class TarefaController {
 
     @Autowired
@@ -56,14 +56,15 @@ public class TarefaController {
         return "Dados inserido";
     }
 
-    @PostMapping(value = "/update/{id}",consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<TarefaOutputDTO> update(@RequestBody TarefaInputDTO dto, @PathVariable Long id, UriComponentsBuilder uriBuilder){
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<TarefaOutputDTO> create(@RequestBody TarefaInputDTO dto, UriComponentsBuilder uriBuilder){
+        Optional<Categoria> categoria = categoriaRepository.findById((long) dto.getCategoria().getId());
+        Optional<Status> status = statusRepository.findById((long) dto.getStatus().getId());
         System.out.println(dto);
-        Tarefa tarefa = dto.build();
-        tarefa.setId(id);
+        Tarefa tarefa = dto.build(categoria.get(), status.get());
         System.out.println(tarefa);
         tarefaRepository.save(tarefa);
-        URI path = uriBuilder.path("/api/tarefas/{id}").buildAndExpand(id).toUri();
+        URI path = uriBuilder.path("/api/tarefas/{id}").buildAndExpand(tarefa.getId()).toUri();
 
         return ResponseEntity.created(path).body(new TarefaOutputDTO(tarefa));
     }

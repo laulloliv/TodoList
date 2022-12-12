@@ -13,7 +13,7 @@ import com.br.ifam.TodoApp.repository.StatusRepository;
 
 @RestController
 @RequestMapping("/api/status")
-@CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class StatusController {
 
     @Autowired
