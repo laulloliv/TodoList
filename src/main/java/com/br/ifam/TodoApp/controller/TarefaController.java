@@ -143,7 +143,7 @@ public class TarefaController {
 
         return ResponseEntity.created(path).body(new TarefaOutputDTO(tarefa));
     }
-    @GetMapping(value = "/doing/{id}",consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/todo/{id}",consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<TarefaOutputDTO> taskDoing(@RequestBody TarefaInputDTO dto, @PathVariable Long id, UriComponentsBuilder uriBuilder){
         System.out.println(dto);
         Optional<Status> status = statusRepository.findById((long)1);
