@@ -38,10 +38,8 @@ public class TarefaController {
         Optional<Categoria> categoria3 = categoriaRepository.findById((long) 3);
         Optional<Categoria> categoria4 = categoriaRepository.findById((long) 4);
         Optional<Status> status = statusRepository.findById((long) 1);
-    //    System.out.println(categoria1.get());
-    //    System.out.println(status.get());
 
-        Tarefa tarefa = new Tarefa("Ir ao Mercado", "Comprar batatas, ovos e material para a lasanha", "12/03/2022", "12/12/2022",categoria5.get(),status.get());
+        Tarefa tarefa = new Tarefa("Ir ao Mercado", "Comprar batatas, ovos e material para a lasanha", "12/28/2022", "12/12/2022",categoria5.get(),status.get());
         Tarefa tarefa2 = new Tarefa("Praticar algum Esporte", "Pesquisar academias perto de casa. Procurar por natacao ou basquete", "11/12/2022", "14/12/2022",categoria4.get(),status.get());
         Tarefa tarefa3 = new Tarefa("Fazer relatorio da Faculdade", "Atividade do prof. Alberto de Sistemas", "12/20/2022", "20/12/2022",categoria3.get(),status.get());
 

@@ -1,11 +1,6 @@
 package com.br.ifam.TodoApp.model;
 
 import javax.persistence.*;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 
 @Entity
 public class Tarefa {
@@ -96,30 +91,15 @@ public class Tarefa {
 
     @Override
     public String toString() {
-        try {
-            Date dateP = new SimpleDateFormat("dd/MM/yyyy").parse(dataPrevista);
-            Date dateC = new SimpleDateFormat("dd/MM/yyyy").parse(dataConclusao);
 
-            Date date = Calendar.getInstance().getTime();
-
-            String datePtoString = new SimpleDateFormat("dd/MM/yyyy").format(dateP);
-            String dateCtoString = new SimpleDateFormat("dd/MM/yyyy").format(dateC);
-
-            setDataPrevista(datePtoString);
-            setDataConclusao(dateCtoString);
-
-            return "Tarefa{" +
-                    "id=" + id +
-                    ", titulo='" + titulo + '\'' +
-                    ", descricao='" + descricao + '\'' +
-                    ", dataPrevista='" + dataPrevista + '\'' +
-                    ", dataConclusao='" + dataConclusao + '\'' +
-                    ", categoria=" + categoria +
-                    ", status=" + status +
-                    '}';
-
-        } catch (ParseException e) {
-            return "Datas Invalidas";
-        }
+        return "Tarefa{" +
+                "id=" + id +
+                ", titulo='" + titulo + '\'' +
+                ", descricao='" + descricao + '\'' +
+                ", dataPrevista='" + dataPrevista + '\'' +
+                ", dataConclusao='" + dataConclusao + '\'' +
+                ", categoria=" + categoria +
+                ", status=" + status +
+                '}';
     }
 }

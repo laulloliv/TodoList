@@ -30,12 +30,7 @@ public class StatusController {
     @GetMapping(value = "/{id}")
     public Status find(@PathVariable Long id){
         Optional<Status> status = statusRepository.findById(id);
-        if (status.isPresent()){
-            return status.get();
-        }
-        else {
-            return null;
-        }
+        return status.orElse(null);
     }
 
     @GetMapping(value = "/create")

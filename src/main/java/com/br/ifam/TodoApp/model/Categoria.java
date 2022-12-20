@@ -1,11 +1,6 @@
 package com.br.ifam.TodoApp.model;
 
 import javax.persistence.*;
-/*import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;*/
-
-import org.aspectj.bridge.context.PinpointingMessageHandler;
 
 @Entity
 public class Categoria {
@@ -17,8 +12,6 @@ public class Categoria {
 
     @Column(nullable = false, unique = true)
     private String descricao;
-    
-
     public Categoria(){}
     public Categoria(String titulo, String descricao){
         this.titulo = titulo;

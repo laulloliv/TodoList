@@ -4,11 +4,6 @@ import com.br.ifam.TodoApp.model.Categoria;
 import com.br.ifam.TodoApp.model.Status;
 import com.br.ifam.TodoApp.model.Tarefa;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-
 public class TarefaInputDTO {
 
     private String titulo;
@@ -85,32 +80,15 @@ public class TarefaInputDTO {
         tarefa.setStatus(status);
         return tarefa;
     }
-
     @Override
     public String toString() {
-        try {
-            Date dateP = new SimpleDateFormat("dd/MM/yyyy").parse(dataPrevista);
-            Date dateC = new SimpleDateFormat("dd/MM/yyyy").parse(dataConclusao);
-
-            Date date = Calendar.getInstance().getTime();
-
-            String datePtoString = new SimpleDateFormat("dd/MM/yyyy").format(dateP);
-            String dateCtoString = new SimpleDateFormat("dd/MM/yyyy").format(dateC);
-
-            setDataPrevista(datePtoString);
-            setDataConclusao(dateCtoString);
-
-            return "Tarefa{" +
-                    ", titulo='" + titulo + '\'' +
-                    ", descricao='" + descricao + '\'' +
-                    ", dataPrevista='" + dataPrevista + '\'' +
-                    ", dataConclusao='" + dataConclusao + '\'' +
-                    ", categoria=" + categoria +
-                    ", status=" + status +
-                    '}';
-
-        } catch (ParseException e) {
-            return "Datas Invalidas";
-        }
+        return "TarefaInputDTO{" +
+                "titulo='" + titulo + '\'' +
+                ", descricao='" + descricao + '\'' +
+                ", dataPrevista='" + dataPrevista + '\'' +
+                ", dataConclusao='" + dataConclusao + '\'' +
+                ", categoria=" + categoria +
+                ", status=" + status +
+                '}';
     }
 }
