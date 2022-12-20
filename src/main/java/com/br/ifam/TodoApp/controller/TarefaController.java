@@ -43,10 +43,6 @@ public class TarefaController {
         Tarefa tarefa2 = new Tarefa("Praticar algum Esporte", "Pesquisar academias perto de casa. Procurar por natacao ou basquete", "11/12/2022", "14/12/2022",categoria4.get(),status.get());
         Tarefa tarefa3 = new Tarefa("Fazer relatorio da Faculdade", "Atividade do prof. Alberto de Sistemas", "12/20/2022", "20/12/2022",categoria3.get(),status.get());
 
-        System.out.println(tarefa);
-        System.out.println(tarefa2);
-        System.out.println(tarefa3);
-
         tarefaRepository.save(tarefa);
         tarefaRepository.save(tarefa2);
         tarefaRepository.save(tarefa3);
@@ -58,9 +54,7 @@ public class TarefaController {
     public ResponseEntity<TarefaOutputDTO> create(@RequestBody TarefaInputDTO dto, UriComponentsBuilder uriBuilder){
         Optional<Categoria> categoria = categoriaRepository.findById((long) dto.getCategoria().getId());
         Optional<Status> status = statusRepository.findById((long) dto.getStatus().getId());
-        System.out.println(dto);
         Tarefa tarefa = dto.build(categoria.get(), status.get());
-        System.out.println(tarefa);
         tarefaRepository.save(tarefa);
         URI path = uriBuilder.path("/api/tarefas/{id}").buildAndExpand(tarefa.getId()).toUri();
 
@@ -89,7 +83,6 @@ public class TarefaController {
         Optional<Categoria> categoria = categoriaRepository.findByTitulo(titulo);
         if(categoria.isPresent()){
             tarefas = (List<Tarefa>) tarefaRepository.findAllByCategoria(categoria);
-            System.out.println(tarefas);
             return tarefas;
         }
         else {
@@ -105,7 +98,6 @@ public class TarefaController {
         Optional<Status> status = statusRepository.findByTituloContaining(titulo);
         if(status.isPresent()){
             tarefas = (List<Tarefa>) tarefaRepository.findAllByStatus(status);
-            System.out.println(tarefas);
             return tarefas;
         }
         else {
@@ -129,13 +121,11 @@ public class TarefaController {
     }
     @GetMapping(value = "/done/{id}",consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<TarefaOutputDTO> taskDone(@RequestBody TarefaInputDTO dto, @PathVariable Long id, UriComponentsBuilder uriBuilder){
-        System.out.println(dto);
         Optional<Status> status = statusRepository.findById((long)3);
         Optional<Tarefa> tarefaAchada = tarefaRepository.findById(id);
         Tarefa tarefa = tarefaAchada.get();
         tarefa.setId(id);
         tarefa.setStatus(status.get());
-        System.out.println(tarefa);
         tarefaRepository.save(tarefa);
         URI path = uriBuilder.path("/api/tarefas/{id}").buildAndExpand(id).toUri();
 
@@ -143,13 +133,11 @@ public class TarefaController {
     }
     @GetMapping(value = "/todo/{id}",consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<TarefaOutputDTO> taskDoing(@RequestBody TarefaInputDTO dto, @PathVariable Long id, UriComponentsBuilder uriBuilder){
-        System.out.println(dto);
         Optional<Status> status = statusRepository.findById((long)1);
         Optional<Tarefa> tarefaAchada = tarefaRepository.findById(id);
         Tarefa tarefa = tarefaAchada.get();
         tarefa.setId(id);
         tarefa.setStatus(status.get());
-        System.out.println(tarefa);
         tarefaRepository.save(tarefa);
         URI path = uriBuilder.path("/api/tarefas/{id}").buildAndExpand(id).toUri();
 
